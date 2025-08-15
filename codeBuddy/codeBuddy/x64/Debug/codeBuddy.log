@@ -1,0 +1,8 @@
+﻿   Qt/MSBuild: 3.4.1.0
+   Qt: 6.9.1
+  uic mainWindow.ui
+  mainWindow.cpp
+  main.cpp
+  qrc_mainWindow.cpp
+  moc_mainWindow.cpp
+  codeBuddy.vcxproj -> C:\Users\ximca\Documents\GitHub\CodeBuddy\codeBuddy\x64\Debug\codeBuddy.exe
