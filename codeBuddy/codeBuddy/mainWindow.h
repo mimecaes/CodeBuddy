@@ -2,6 +2,8 @@
 
 #include <QtWidgets/QMainWindow>
 #include "ui_mainWindow.h"
+#include "secondWindow.h"
+
 
 class mainWindow : public QMainWindow
 {
@@ -13,5 +15,9 @@ public:
 
 private:
     Ui::mainWindowClass ui;
+    secondWindow* window;
+
+private slots:
+    void on_btnInicio_clicked();
 };
 

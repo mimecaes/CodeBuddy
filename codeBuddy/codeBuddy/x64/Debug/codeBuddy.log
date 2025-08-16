@@ -1,8 +1,9 @@
 ﻿   Qt/MSBuild: 3.4.1.0
    Qt: 6.9.1
-  uic mainWindow.ui
-  mainWindow.cpp
+  moc secondWindow.h
   main.cpp
-  qrc_mainWindow.cpp
+  mainWindow.cpp
+  secondWindow.cpp
   moc_mainWindow.cpp
+  moc_secondWindow.cpp
   codeBuddy.vcxproj -> C:\Users\ximca\Documents\GitHub\CodeBuddy\codeBuddy\x64\Debug\codeBuddy.exe
