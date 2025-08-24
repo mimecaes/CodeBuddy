@@ -1,0 +1,114 @@
+{
+  "language": "es",
+  "version": "1.0.0",
+  "notes": "Mapa de palabras/phrases en español a tokens C++ para el traductor. Normaliza minúsculas y sin tildes.",
+  "normalization": {
+    "lowercase": true,
+    "strip_diacritics": true,
+    "collapse_whitespace": true,
+    "trim_punctuation": true
+  },
+  "reserved_names": {
+    "accumulator": [
+      "total"
+    ],
+    "result": [
+      "resultado"
+    ]
+  },
+  "maps": {
+    "binary_ops": {
+      "sumar": "+",
+      "restar": "-",
+      "multiplicar": "*",
+      "dividir": "/"
+    },
+    "comparators": {
+      "igual a": "==",
+      "diferente de": "!=",
+      "mayor que": ">",
+      "menor que": "<"
+    },
+    "bool_ops": {
+      "y": "&&",
+      "o": "||"
+    }
+  },
+  "types": {
+    "entero": "int",
+    "numero entero": "int",
+    "número entero": "int",
+    "numero decimal": "double",
+    "número decimal": "double",
+    "texto": "string",
+    "palabra": "string",
+    "cadena de texto": "string",
+    "caracter": "char",
+    "carácter": "char",
+    "booleano": "bool"
+  },
+  "keywords": {
+    "variable": [
+      "crear variable",
+      "asignar valor",
+      "valor inicial"
+    ],
+    "arrays": [
+      "crear lista",
+      "crear arreglo",
+      "lista de",
+      "con {n} elementos",
+      "recorrer la lista",
+      "agregar a la lista"
+    ],
+    "control": [
+      "si",
+      "sino",
+      "mientras",
+      "repetir hasta",
+      "para",
+      "condicion",
+      "condición"
+    ],
+    "io": [
+      "mostrar",
+      "imprimir",
+      "leer",
+      "ingresar valor",
+      "mensaje"
+    ],
+    "program": [
+      "comenzar programa",
+      "terminar programa",
+      "fin",
+      "comentario",
+      "definir función",
+      "llamar función"
+    ]
+  },
+  "templates": {
+    "main_begin": "#include <bits/stdc++.h>\\nusing namespace std;\\nint main(){",
+    "main_end": "return 0;\\n}",
+    "comment": "// ${text}",
+    "var_declaration": "${type} ${name};",
+    "var_declaration_init": "${type} ${name} = ${value};",
+    "assign": "${name} = ${value};",
+    "array_declaration": "${type} ${name}[${size}];",
+    "vector_declaration": "std::vector<${type}> ${name}(${size});",
+    "for_index": "for (int ${i}=0; ${i}<${n}; ++${i}) { ${body} }",
+    "while": "while (${cond}) { ${body} }",
+    "do_while": "do { ${body} } while (${cond});",
+    "if": "if (${cond}) { ${then} }",
+    "if_else": "if (${cond}) { ${then} } else { ${else} }",
+    "cout": "std::cout << ${expr} << std::endl;",
+    "cin": "std::cin >> ${var};",
+    "func_def": "${ret} ${name}(${params}) { ${body} }",
+    "func_call": "${name}(${args});"
+  },
+  "emit": {
+    "iostream": "#include <iostream>",
+    "vector": "#include <vector>",
+    "string": "#include <string>",
+    "using_std": "using namespace std;"
+  }
+}
