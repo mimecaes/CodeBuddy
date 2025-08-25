@@ -1,4 +1,11 @@
+C:\Users\ximca\Documents\GitHub\CodeBuddy\codeBuddy\codeBuddy\CodeGenerator.cpp;C:\Users\ximca\Documents\GitHub\CodeBuddy\codeBuddy\codeBuddy\x64\Debug\CodeGenerator.obj
+C:\Users\ximca\Documents\GitHub\CodeBuddy\codeBuddy\codeBuddy\Core.cpp;C:\Users\ximca\Documents\GitHub\CodeBuddy\codeBuddy\codeBuddy\x64\Debug\Core.obj
+C:\Users\ximca\Documents\GitHub\CodeBuddy\codeBuddy\codeBuddy\Lexer.cpp;C:\Users\ximca\Documents\GitHub\CodeBuddy\codeBuddy\codeBuddy\x64\Debug\Lexer.obj
+C:\Users\ximca\Documents\GitHub\CodeBuddy\codeBuddy\codeBuddy\Loader.cpp;C:\Users\ximca\Documents\GitHub\CodeBuddy\codeBuddy\codeBuddy\x64\Debug\Loader.obj
+C:\Users\ximca\Documents\GitHub\CodeBuddy\codeBuddy\codeBuddy\Parser.cpp;C:\Users\ximca\Documents\GitHub\CodeBuddy\codeBuddy\codeBuddy\x64\Debug\Parser.obj
 C:\Users\ximca\Documents\GitHub\CodeBuddy\codeBuddy\codeBuddy\secondWindow.cpp;C:\Users\ximca\Documents\GitHub\CodeBuddy\codeBuddy\codeBuddy\x64\Debug\secondWindow.obj
+C:\Users\ximca\Documents\GitHub\CodeBuddy\codeBuddy\codeBuddy\SymbolTable.cpp;C:\Users\ximca\Documents\GitHub\CodeBuddy\codeBuddy\codeBuddy\x64\Debug\SymbolTable.obj
+C:\Users\ximca\Documents\GitHub\CodeBuddy\codeBuddy\codeBuddy\Translator.cpp;C:\Users\ximca\Documents\GitHub\CodeBuddy\codeBuddy\codeBuddy\x64\Debug\Translator.obj
 C:\Users\ximca\Documents\GitHub\CodeBuddy\codeBuddy\codeBuddy\mainWindow.cpp;C:\Users\ximca\Documents\GitHub\CodeBuddy\codeBuddy\codeBuddy\x64\Debug\mainWindow.obj
 C:\Users\ximca\Documents\GitHub\CodeBuddy\codeBuddy\codeBuddy\main.cpp;C:\Users\ximca\Documents\GitHub\CodeBuddy\codeBuddy\codeBuddy\x64\Debug\main.obj
 C:\Users\ximca\Documents\GitHub\CodeBuddy\codeBuddy\codeBuddy\x64\Debug\qt\rcc\qrc_mainWindow.cpp;C:\Users\ximca\Documents\GitHub\CodeBuddy\codeBuddy\codeBuddy\x64\Debug\qrc_mainWindow.obj
