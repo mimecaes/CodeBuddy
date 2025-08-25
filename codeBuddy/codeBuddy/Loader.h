@@ -3,7 +3,6 @@
 #include <QString>
 #include <QHash>
 #include <optional>
-#include <vector>
 
 struct MetaConfig {
     bool lowercase{ true };

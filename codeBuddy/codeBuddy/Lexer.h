@@ -1,7 +1,6 @@
 #pragma once
 #include "Core.h"
 #include "Loader.h"
-#include <vector>
 #include <QString>
 
 class Lexer {
