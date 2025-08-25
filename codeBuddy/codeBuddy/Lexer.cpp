@@ -17,12 +17,10 @@ static QString stripPunctEdges(QString s) {
     return s;
 }
 
-static QString normalizeText(const QString& in, bool lowercase, bool stripDia,
-    bool collapseWS, bool trimPunct) {
+QString Lexer::normalize(const QString& in) const {
     QString s = in;
-    if (lowercase) s = s.toLower();
-
-    if (stripDia) {
+    if (cfg.meta.lowercase) s = s.toLower();
+    if (cfg.meta.stripDia) {
         s.replace(QChar(0x00E1), QLatin1Char('a'));
         s.replace(QChar(0x00E9), QLatin1Char('e'));
         s.replace(QChar(0x00ED), QLatin1Char('i'));
@@ -30,18 +28,14 @@ static QString normalizeText(const QString& in, bool lowercase, bool stripDia,
         s.replace(QChar(0x00FA), QLatin1Char('u'));
         s.replace(QChar(0x00F1), QLatin1Char('n'));
     }
-
-    if (collapseWS) s = s.simplified(); else s = s.trimmed();
-
-    if (trimPunct) {
+    if (cfg.meta.collapseWS) s = s.simplified(); else s = s.trimmed();
+    if (cfg.meta.trimPunct) {
         auto isP = [](QChar c) { return c.isPunct(); };
         while (!s.isEmpty() && isP(s.front())) s.remove(0, 1);
         while (!s.isEmpty() && isP(s.back()))  s.chop(1);
     }
-
     return s;
 }
-
 
 std::vector<Token> Lexer::tokenize(const QString& input, std::vector<std::string>&) const {
     const QString normAll = normalize(input);
@@ -70,7 +64,10 @@ std::vector<Token> Lexer::tokenize(const QString& input, std::vector<std::string
             continue;
         }
 
-        for (int n = std::min(maxN, words.size() - i); n >= 1; --n) {
+        int remaining = static_cast<int>(words.size() - i);
+        if (remaining > maxN) remaining = maxN;
+
+        for (int n = remaining; n >= 1; --n) {
             QString phrase;
             for (int k = 0; k < n; ++k) {
                 if (k) phrase += ' ';

@@ -11,12 +11,12 @@ static QString normalizeText(const QString& in, bool lowercase, bool stripDia, b
     if (lowercase) s = s.toLower();
 
     if (stripDia) {
-        s.replace(QStringLiteral("á"), QStringLiteral("a"));
-        s.replace(QStringLiteral("é"), QStringLiteral("e"));
-        s.replace(QStringLiteral("í"), QStringLiteral("i"));
-        s.replace(QStringLiteral("ó"), QStringLiteral("o"));
-        s.replace(QStringLiteral("ú"), QStringLiteral("u"));
-        s.replace(QStringLiteral("ñ"), QStringLiteral("n"));
+        s.replace(QChar(0x00E1), QLatin1Char('a'));
+        s.replace(QChar(0x00E9), QLatin1Char('e'));
+        s.replace(QChar(0x00ED), QLatin1Char('i'));
+        s.replace(QChar(0x00F3), QLatin1Char('o'));
+        s.replace(QChar(0x00FA), QLatin1Char('u'));
+        s.replace(QChar(0x00F1), QLatin1Char('n'));
     }
 
     if (collapseWS)  s = s.simplified();
