@@ -42,3 +42,4 @@ Executables
 *.pdb
 *.idb
 *.log
+*.user
