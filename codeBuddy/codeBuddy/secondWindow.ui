@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>secondWindowClass</class>
+ <widget class="QWidget" name="secondWindowClass">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1276</width>
+    <height>854</height>
+   </rect>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>16777215</height>
+   </size>
+  </property>
+  <property name="mouseTracking">
+   <bool>false</bool>
+  </property>
+  <property name="tabletTracking">
+   <bool>false</bool>
+  </property>
+  <property name="acceptDrops">
+   <bool>false</bool>
+  </property>
+  <property name="windowTitle">
+   <string>PantallaPrincipal</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: #f9f9f0;
+</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <layout class="QVBoxLayout" name="principalLayout">
+     <item>
+      <layout class="QHBoxLayout" name="topLayout">
+       <item>
+        <widget class="QPushButton" name="btnVolver">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+    background-color: #ffd2e7;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 20px;
+    font-size: 14pt;
+}
+
+QPushButton:hover {
+    background-color: #ffa8d5;
+}
+
+QPushButton:pressed {
+    background-color: #ffd2e7;
+}
+</string>
+         </property>
+         <property name="text">
+          <string>⤶</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelTxt">
+         <property name="styleSheet">
+          <string notr="true"> QLabel { color: #ffffff; font-size: 20px; font-weight: bold; font-family: &quot;Segoe UI&quot;, sans-serif; background-color: #dfe7fc; border: 2px solid #cddafd; border-radius: 8px; padding: 6px 12px; qproperty-alignment: AlignCenter; }</string>
+         </property>
+         <property name="text">
+          <string>Archivo txt</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Policy::Expanding</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelCode">
+         <property name="styleSheet">
+          <string notr="true"> QLabel { color: #ffffff; font-size: 20px; font-weight: bold; font-family: &quot;Segoe UI&quot;, sans-serif; background-color: #dfe7fc; border: 2px solid #cddafd; border-radius: 8px; padding: 6px 12px; qproperty-alignment: AlignCenter; }</string>
+         </property>
+         <property name="text">
+          <string>Codigo generado</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="windowsLayout">
+       <item>
+        <widget class="QPlainTextEdit" name="TxtWindow">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPlainTextEdit" name="codeWindow">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="btnsLayout">
+       <property name="spacing">
+        <number>180</number>
+       </property>
+       <property name="leftMargin">
+        <number>100</number>
+       </property>
+       <property name="rightMargin">
+        <number>100</number>
+       </property>
+       <item>
+        <widget class="QPushButton" name="btnTxtArchive">
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+    background-color: #ffd2e7;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 20px;
+    font-size: 14pt;
+}
+
+QPushButton:hover {
+    background-color: #ffa8d5;
+}
+
+QPushButton:pressed {
+    background-color: #ffd2e7;
+}
+</string>
+         </property>
+         <property name="text">
+          <string>˚₊‧꒰ა Cargar archivo ໒꒱ ‧₊˚</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnGenerar">
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+    background-color: #cfe7b7;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 20px;
+    font-size: 14pt;
+}
+
+QPushButton:hover {
+    background-color: #bae093;
+}
+
+QPushButton:pressed {
+    background-color: #cfe7b7;
+}
+</string>
+         </property>
+         <property name="text">
+          <string>˚₊‧꒰ა Generar Codigo ໒꒱ ‧₊˚</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
