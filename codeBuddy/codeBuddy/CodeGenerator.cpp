@@ -220,7 +220,6 @@ QString CodeGenerator::generateCppCode(const QStringList& instructions, const nl
             temp = renderIf(temp, bestMatch);
 
             temp = regex_replace(temp, regex(R"(\$\{\d+\})"), "");
-            if (temp.find("cout") == string::npos) temp.erase(remove(temp.begin(), temp.end(), '\n'), temp.end());
             code += "// [rule:" + bestRuleName + "]\n";
             code += QString::fromStdString(temp);
             code += "\n";

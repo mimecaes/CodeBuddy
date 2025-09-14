@@ -2,7 +2,6 @@
 #include <fstream>
 #include <sstream>
 #include <algorithm>
-
 using namespace std;
 
 nlohmann::json KeywordLoader::loadJson(const string& filename) {
@@ -57,10 +56,21 @@ string KeywordLoader::getBinaryOp(const nlohmann::json& j, const string& palabra
 }
 
 string KeywordLoader::getType(const nlohmann::json& j, const string& palabra) {
-    if (!j.contains("types")) return "";
-    auto it = j["types"].find(palabra);
-    if (it != j["types"].end())
-        return it.value().get<string>();
+    if (j.contains("maps") && j["maps"].contains("tipo_cpp")) {
+        auto it = j["maps"]["tipo_cpp"].find(palabra);
+        if (it != j["maps"]["tipo_cpp"].end())
+            return it.value().get<string>();
+    }
+    if (j.contains("tipo_cpp")) {
+        auto it = j["tipo_cpp"].find(palabra);
+        if (it != j["tipo_cpp"].end())
+            return it.value().get<string>();
+    }
+    if (j.contains("types")) { 
+        auto it = j["types"].find(palabra);
+        if (it != j["types"].end())
+            return it.value().get<string>();
+    }
     return "";
 }
 
