@@ -1,4 +1,4 @@
-    #pragma once
+#pragma once
 #include <string>
 #include "json.hpp"
 #include <stdexcept>
@@ -9,9 +9,9 @@ public:
     static nlohmann::json loadJson(const string& filename);
     static void validateJson(const nlohmann::json& j);
 
-    static string getBinaryOp(const nlohmann::json& j, const string& palabra);
-    static string getType(const nlohmann::json& j, const string& palabra);
-    static bool isControlKeyword(const nlohmann::json& j, const string& palabra);
-    static bool isIOKeyword(const nlohmann::json& j, const string& palabra);
-    static bool isArrayKeyword(const nlohmann::json& j, const string& palabra);
+    static string getBinaryOp(const nlohmann::json& j, const string& word);
+    static string getType(const nlohmann::json& j, const string& word);
+    static bool isControlKeyword(const nlohmann::json& j, const string& word);
+    static bool isIOKeyword(const nlohmann::json& j, const string& word);
+    static bool isArrayKeyword(const nlohmann::json& j, const string& word);
 };
