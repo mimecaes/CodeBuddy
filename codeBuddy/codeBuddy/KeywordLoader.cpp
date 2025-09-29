@@ -7,6 +7,19 @@ using namespace std;
 nlohmann::json KeywordLoader::loadJson(const string& filename) {
     ifstream file(filename);
     if (!file.is_open()) throw runtime_error("Could not open JSON file: " + filename);
+
+    stringstream ss;
+    ss << file.rdbuf();
+    const string content = ss.str();
+    if (content.empty()) throw runtime_error("Empty JSON file: " + filename);
+
+    try {
+        nlohmann::json j = nlohmann::json::parse(content);
+        return j;
+    }
+    catch (const nlohmann::json::parse_error& ex) {
+        throw runtime_error(string("JSON parse error: ") + ex.what());
+    }
 }
 
 string KeywordLoader::getBinaryOp(const nlohmann::json& j, const string& word) {

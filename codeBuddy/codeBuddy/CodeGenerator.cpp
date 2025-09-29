@@ -11,7 +11,6 @@ struct PreStep {
     string name;
 };
 
-// Quita tildes usando normalización Unicode de Qt y devuelve UTF-8
 static string toUtf8WithoutAccents(const QString& q) {
     QString decomposed = q.normalized(QString::NormalizationForm_D);
     QString stripped;
