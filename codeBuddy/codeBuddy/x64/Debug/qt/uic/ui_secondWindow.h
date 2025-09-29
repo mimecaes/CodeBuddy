@@ -27,7 +27,6 @@ public:
     QVBoxLayout *verticalLayout_2;
     QVBoxLayout *principalLayout;
     QHBoxLayout *topLayout;
-    QPushButton *btnVolver;
     QLabel *labelTxt;
     QSpacerItem *horizontalSpacer_2;
     QLabel *labelCode;
@@ -61,29 +60,6 @@ public:
         topLayout = new QHBoxLayout();
         topLayout->setSpacing(6);
         topLayout->setObjectName("topLayout");
-        btnVolver = new QPushButton(secondWindowClass);
-        btnVolver->setObjectName("btnVolver");
-        btnVolver->setEnabled(true);
-        btnVolver->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"    background-color: #ffd2e7;\n"
-"    color: white;\n"
-"    border: none;\n"
-"    border-radius: 12px;\n"
-"    padding: 10px 20px;\n"
-"    font-size: 14pt;\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"    background-color: #ffa8d5;\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: #ffd2e7;\n"
-"}\n"
-""));
-
-        topLayout->addWidget(btnVolver);
-
         labelTxt = new QLabel(secondWindowClass);
         labelTxt->setObjectName("labelTxt");
         labelTxt->setStyleSheet(QString::fromUtf8(" QLabel { color: #ffffff; font-size: 20px; font-weight: bold; font-family: \"Segoe UI\", sans-serif; background-color: #dfe7fc; border: 2px solid #cddafd; border-radius: 8px; padding: 6px 12px; qproperty-alignment: AlignCenter; }"));
@@ -189,7 +165,6 @@ public:
     void retranslateUi(QWidget *secondWindowClass)
     {
         secondWindowClass->setWindowTitle(QCoreApplication::translate("secondWindowClass", "PantallaPrincipal", nullptr));
-        btnVolver->setText(QCoreApplication::translate("secondWindowClass", "\342\244\266", nullptr));
         labelTxt->setText(QCoreApplication::translate("secondWindowClass", "Archivo txt", nullptr));
         labelCode->setText(QCoreApplication::translate("secondWindowClass", "Codigo generado", nullptr));
         btnTxtArchive->setText(QCoreApplication::translate("secondWindowClass", "\313\232\342\202\212\342\200\247\352\222\260\341\203\220 Cargar archivo \340\273\222\352\222\261 \342\200\247\342\202\212\313\232", nullptr));
