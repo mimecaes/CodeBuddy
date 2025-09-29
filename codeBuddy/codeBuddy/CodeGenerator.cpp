@@ -3,12 +3,27 @@
 #include <regex>
 #include <iostream>
 #include <vector>
+#include <QByteArray>
 
 struct PreStep {
     regex rx;
     string replace;
     string name;
 };
+
+// Quita tildes usando normalización Unicode de Qt y devuelve UTF-8
+static string toUtf8WithoutAccents(const QString& q) {
+    QString decomposed = q.normalized(QString::NormalizationForm_D);
+    QString stripped;
+    stripped.reserve(decomposed.size());
+    for (QChar ch : decomposed) {
+        if (ch.category() != QChar::Mark_NonSpacing) {
+            stripped.append(ch);
+        }
+    }
+    QByteArray utf8 = stripped.toUtf8();
+    return string(utf8.constData(), static_cast<size_t>(utf8.size()));
+}
 
 static string normalizePatternEscapes(const string& p_in) {
     string s = p_in;
@@ -17,15 +32,15 @@ static string normalizePatternEscapes(const string& p_in) {
     pos = 0;
     while ((pos = s.find("\\s*", pos)) != string::npos) { s.replace(pos, 3, "[[:space:]]*"); pos += 11; }
     pos = 0;
-    while ((pos = s.find("\\s", pos)) != string::npos)    { s.replace(pos, 2, "[[:space:]]"); pos += 11; }
+    while ((pos = s.find("\\s", pos)) != string::npos) { s.replace(pos, 2, "[[:space:]]"); pos += 11; }
     pos = 0;
     while ((pos = s.find("\\d+", pos)) != string::npos) { s.replace(pos, 3, "[0-9]+"); pos += 6; }
     pos = 0;
-    while ((pos = s.find("\\d", pos)) != string::npos)  { s.replace(pos, 2, "[0-9]"); pos += 5; }
+    while ((pos = s.find("\\d", pos)) != string::npos) { s.replace(pos, 2, "[0-9]"); pos += 5; }
     pos = 0;
     while ((pos = s.find("\\w+", pos)) != string::npos) { s.replace(pos, 3, "[A-Za-z0-9_]+"); pos += 13; }
     pos = 0;
-    while ((pos = s.find("\\w", pos)) != string::npos)  { s.replace(pos, 2, "[A-Za-z0-9_]"); pos += 13; }
+    while ((pos = s.find("\\w", pos)) != string::npos) { s.replace(pos, 2, "[A-Za-z0-9_]"); pos += 13; }
     return s;
 }
 
@@ -38,12 +53,13 @@ static vector<Rule> loadRules(const nlohmann::json& keywords) {
         const string tmpl = el.value()["template"].get<string>();
         const string pattern = normalizePatternEscapes(patternRaw);
         try {
-            regex rx(pattern, regex_constants::ECMAScript | regex_constants::optimize);
+            // Agrega icase para insensibilidad a mayusculas
+            regex rx(pattern, regex_constants::ECMAScript | regex_constants::optimize | regex_constants::icase);
             rules.push_back(Rule{ rx, tmpl, ruleName });
-        } 
+        }
         catch (const regex_error& ex) {
             cerr << "Warning: invalid regex for rule '" << ruleName << "': " << ex.what()
-                 << " pattern(raw): " << patternRaw << " pattern(norm): " << pattern << "\n";
+                << " pattern(raw): " << patternRaw << " pattern(norm): " << pattern << "\n";
         }
     }
     return rules;
@@ -61,10 +77,10 @@ static vector<PreStep> loadPreprocess(const nlohmann::json& keywords) {
         try {
             regex rx(pattern, regex_constants::ECMAScript | regex_constants::optimize);
             steps.push_back(PreStep{ rx, repl, name });
-        } 
+        }
         catch (const regex_error& ex) {
             cerr << "Warning: invalid preprocess regex '" << name << "': " << ex.what()
-                 << " pattern(raw): " << patternRaw << " pattern(norm): " << pattern << "\n";
+                << " pattern(raw): " << patternRaw << " pattern(norm): " << pattern << "\n";
         }
     }
     return steps;
@@ -72,14 +88,15 @@ static vector<PreStep> loadPreprocess(const nlohmann::json& keywords) {
 
 static string applyPreprocess(const vector<PreStep>& steps, const string& in) {
     string out = in;
-    for (const auto& s : steps) {
-        try {
+    bool changed;
+    do {
+        changed = false;
+        for (const auto& s : steps) {
+            string prev = out;
             out = regex_replace(out, s.rx, s.replace);
-        } 
-        catch (const regex_error& ex) {
-            cerr << "Warning: preprocess replace failed: " << ex.what() << "\n";
+            if (out != prev) changed = true;
         }
-    }
+    } while (changed);
     return out;
 }
 
@@ -91,7 +108,7 @@ static string normalize(const string& input) {
     }
     auto new_end = unique(out.begin(), out.end(), [](char a, char b) {
         return isspace(a) && isspace(b);
-    });
+        });
     out.erase(new_end, out.end());
     size_t start = out.find_first_not_of(' ');
     size_t end = out.find_last_not_of(' ');
@@ -152,16 +169,18 @@ QString CodeGenerator::generateCppCode(const QStringList& instructions, const nl
     QString code;
     if (keywords.contains("templates") && keywords["templates"].contains("main_begin")) {
         code += QString::fromStdString(keywords["templates"]["main_begin"].get<string>());
-    } 
+    }
     else code += "#include <iostream>\nint main(){\n";
 
     vector<Rule> rules = loadRules(keywords);
     vector<PreStep> preprocess = loadPreprocess(keywords);
 
     for (const QString& qline : instructions) {
-        string original = qline.toStdString();
-        string pre = applyPreprocess(preprocess, original);
-        string line = normalize(pre);
+        string original = toUtf8WithoutAccents(qline);
+        // Convertir la línea a UTF-8 explícitamente para preservar tildes correctamente
+        //QByteArray ba = qline.toUtf8();
+        //string original(ba.constData(), static_cast<size_t>(ba.size()));
+        string line = applyPreprocess(preprocess, original); // Solo preprocesa, no normaliza
 
         if (line.empty()) {
             code += "\n";
@@ -177,7 +196,7 @@ QString CodeGenerator::generateCppCode(const QStringList& instructions, const nl
             for (const Rule& r : rules) {
                 smatch match;
                 bool ok = exact ? regex_match(line, match, r.pattern)
-                                : regex_search(line, match, r.pattern);
+                    : regex_search(line, match, r.pattern);
                 if (!ok) continue;
 
                 int matchedGroups = 0;
@@ -191,7 +210,7 @@ QString CodeGenerator::generateCppCode(const QStringList& instructions, const nl
                     bestMatch = match;
                 }
             }
-        };
+            };
 
         tryMatch(true);
         if (bestGroups < 0) tryMatch(false);
@@ -223,12 +242,15 @@ QString CodeGenerator::generateCppCode(const QStringList& instructions, const nl
             code += "// [rule:" + bestRuleName + "]\n";
             code += QString::fromStdString(temp);
             code += "\n";
-        }   else code += "// " + QString::fromStdString(original) + "\n";
+        }
+        else {
+            code += "// " + QString::fromStdString(original) + "\n";
+        }
     }
 
     if (keywords.contains("templates") && keywords["templates"].contains("main_end")) {
         code += QString::fromStdString(keywords["templates"]["main_end"].get<string>());
-    } 
+    }
     else code += "return 0;";
 
     return code;
