@@ -7,8 +7,6 @@ using namespace std;
 class KeywordLoader {
 public:
     static nlohmann::json loadJson(const string& filename);
-    static void validateJson(const nlohmann::json& j);
-
     static string getBinaryOp(const nlohmann::json& j, const string& word);
     static string getType(const nlohmann::json& j, const string& word);
     static bool isControlOp(const nlohmann::json& j, const string& word);
