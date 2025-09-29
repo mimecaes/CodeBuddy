@@ -167,19 +167,13 @@ static string renderIf(const string& in, const smatch& m) {
 
 QString CodeGenerator::generateCppCode(const QStringList& instructions, const nlohmann::json& keywords) {
     QString code;
-    if (keywords.contains("templates") && keywords["templates"].contains("main_begin")) {
-        code += QString::fromStdString(keywords["templates"]["main_begin"].get<string>());
-    }
-    else code += "#include <iostream>\nint main(){\n";
+    code += "#include <iostream>\n#include <vector>\n#include <string>\n#include <fstream>\nusing namespace std;\nint main(){";
 
     vector<Rule> rules = loadRules(keywords);
     vector<PreStep> preprocess = loadPreprocess(keywords);
 
     for (const QString& qline : instructions) {
         string original = toUtf8WithoutAccents(qline);
-        // Convertir la línea a UTF-8 explícitamente para preservar tildes correctamente
-        //QByteArray ba = qline.toUtf8();
-        //string original(ba.constData(), static_cast<size_t>(ba.size()));
         string line = applyPreprocess(preprocess, original); // Solo preprocesa, no normaliza
 
         if (line.empty()) {
@@ -247,11 +241,7 @@ QString CodeGenerator::generateCppCode(const QStringList& instructions, const nl
             code += "// " + QString::fromStdString(original) + "\n";
         }
     }
-
-    if (keywords.contains("templates") && keywords["templates"].contains("main_end")) {
-        code += QString::fromStdString(keywords["templates"]["main_end"].get<string>());
-    }
-    else code += "return 0;";
+    code += "return 0;";
 
     return code;
 }
