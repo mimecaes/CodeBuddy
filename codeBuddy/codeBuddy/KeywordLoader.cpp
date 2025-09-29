@@ -17,7 +17,8 @@ nlohmann::json KeywordLoader::loadJson(const string& filename) {
         nlohmann::json j = nlohmann::json::parse(content);
         validateJson(j);
         return j;
-    } catch (const nlohmann::json::parse_error& ex) {
+    }
+    catch (const nlohmann::json::parse_error& ex) {
         throw runtime_error(string("JSON parse error: ") + ex.what());
     }
 }
@@ -57,35 +58,39 @@ string KeywordLoader::getType(const nlohmann::json& j, const string& word) {
         if (it != j["maps"]["tipo_cpp"].end())
             return it.value().get<string>();
     }
-
-    if (j.contains("tipo_cpp")) {
-        auto it = j["tipo_cpp"].find(word);
-        if (it != j["tipo_cpp"].end())
-            return it.value().get<string>();
-    }
-
-    if (j.contains("types")) {
-        auto it = j["types"].find(word);
-        if (it != j["types"].end())
-            return it.value().get<string>();
-    }
     return "";
 }
 
-bool KeywordLoader::isControlKeyword(const nlohmann::json& j, const string& word) {
-    if (!j.contains("keywords") || !j["keywords"].contains("control")) return false;
-    const auto& arr = j["keywords"]["control"];
-    return find(arr.begin(), arr.end(), word) != arr.end();
+bool KeywordLoader::isControlOp(const nlohmann::json& j, const string& word) {
+    if (!j.contains("control_ops") || !j["control_ops"].is_object()) return false;
+    for (auto it = j["control_ops"].begin(); it != j["control_ops"].end(); ++it) {
+        if (it.key() == word) return true;
+    }
+    return false;
 }
 
-bool KeywordLoader::isIOKeyword(const nlohmann::json& j, const string& word) {
-    if (!j.contains("keywords") || !j["keywords"].contains("io")) return false;
-    const auto& arr = j["keywords"]["io"];
-    return find(arr.begin(), arr.end(), word) != arr.end();
+bool KeywordLoader::isIOOp(const nlohmann::json& j, const string& word) {
+    if (!j.contains("rules") || !j["rules"].is_object()) return false;
+    static const vector<string> io_patterns = { "mostrar", "imprimir", "leer", "cin", "cout" };
+    for (auto it = j["rules"].begin(); it != j["rules"].end(); ++it) {
+        for (const auto& pat : io_patterns) {
+            if (it.key().find(pat) != string::npos) {
+                if (word == pat) return true;
+            }
+        }
+    }
+    return false;
 }
 
-bool KeywordLoader::isArrayKeyword(const nlohmann::json& j, const string& word) {
-    if (!j.contains("keywords") || !j["keywords"].contains("arrays")) return false;
-    const auto& arr = j["keywords"]["arrays"];
-    return find(arr.begin(), arr.end(), word) != arr.end();
+bool KeywordLoader::isArrayOp(const nlohmann::json& j, const string& word) {
+    if (!j.contains("rules") || !j["rules"].is_object()) return false;
+    static const vector<string> array_patterns = { "lista", "arreglo", "vector" };
+    for (auto it = j["rules"].begin(); it != j["rules"].end(); ++it) {
+        for (const auto& pat : array_patterns) {
+            if (it.key().find(pat) != string::npos) {
+                if (word == pat) return true;
+            }
+        }
+    }
+    return false;
 }
