@@ -16,9 +16,7 @@ static string toUtf8WithoutAccents(const QString& q) {
     QString stripped;
     stripped.reserve(decomposed.size());
     for (QChar ch : decomposed) {
-        if (ch.category() != QChar::Mark_NonSpacing) {
-            stripped.append(ch);
-        }
+        if (ch.category() != QChar::Mark_NonSpacing) stripped.append(ch);
     }
     QByteArray utf8 = stripped.toUtf8();
     return string(utf8.constData(), static_cast<size_t>(utf8.size()));

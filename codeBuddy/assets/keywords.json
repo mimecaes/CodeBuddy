@@ -165,10 +165,12 @@
       "pattern": "sumar los números ([0-9, ]+)",
       "template": "int resultado = 0;\nvector<int> lista = {${1}};\nfor(auto n : lista) resultado += n;\n"
     },
+
     "crear_lista_n": {
-      "pattern": "^crear[[:space:]]+una[[:space:]]+lista[[:space:]]+de[[:space:]]+([0-9]+)[[:space:]]+n[uú]meros[[:space:]]+enteros$",
-      "template": "vector<int> lista(${1});"
+      "pattern": "^crear\\s+(?:una\\s+)?(?:lista|arreglo|vector)\\s+(?:de\\s+)?([0-9]+)\\s*(?:n[uú]meros|elementos)?\\s*(int|double|float|char|bool|string|enteros?|decimales?|entero|caracteres|booleanos|texto|palabras|cadena)\\s*(?:llamada|llamado|con\\s*nombre)?\\s*([a-zA-Z_][a-zA-Z0-9_]*)$",
+      "template": "vector<${2}> ${3}(${1});"
     },
+
     "repetir_mensaje": {
       "pattern": "^repetir[[:space:]]+([0-9]+)[[:space:]]+veces[[:space:]]+(?:mostrar|imprimir)[[:space:]]+el[[:space:]]+mensaje[[:space:]]*\"([^\"]+)\"$",
       "template": "for(int i=0; i<${1}; ++i) { cout << \"${2}\" << endl; }"
@@ -204,7 +206,7 @@
 
     "terminar_repetir_hasta": {
       "pattern": "^terminar[[:space:]]+repetir[[:space:]]+hasta[[:space:]]+que[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*)[[:space:]]+(>|<|>=|<=|==|!=)[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*|[0-9]+(?:\\.[0-9]+)?)$",
-      "template": "} while (!(${1} ${2} ${3}));"
+      "template": "} while (${1} ${2} ${3});"
     },
 
     "si_generico": {
@@ -221,6 +223,10 @@
       "pattern": "^terminar[[:space:]]+instrucci[oó]n$",
       "template": "}"
     },
+    "terminar_linea": {
+      "pattern": "^terminar[[:space:]]+l[ií]nea$",
+      "template": ";"
+    },
 
     "recorrer_lista_sumar_total": {
       "pattern": "^recorrer[[:space:]]+la[[:space:]]+lista[[:space:]]+y[[:space:]]+sumar[[:space:]]+cada[[:space:]]+elemento[[:space:]]+al[[:space:]]+total$",
@@ -236,7 +242,7 @@
     },
     "sino_mostrar": {
       "pattern": "sino mostrar \"([^\"]+)\"",
-      "template": "else { cout << \"${1}\" << endl; }"
+      "template": "else { cout << \"${1}\" << endl;"
     },
     "mostrar_mensaje": {
       "pattern": "mostrar el mensaje \"([^\"]+)\"",
@@ -261,7 +267,7 @@
     },
     "repetir_veces_mensaje": {
       "pattern": "repetir ([0-9]+) veces mostrar el mensaje \"([^\"]+)\"",
-      "template": "for(int i=0; i<${1}; i++) { cout << \"${2}\" << endl; }"
+      "template": "for(int i=0; i<${1}; i++) { cout << \"${2}\" << endl; "
     },
     "repetir_n_veces": {
       "pattern": "repetir ([0-9]+) veces",
@@ -305,7 +311,7 @@
     },
     "recorrer_lista": {
       "pattern": "recorrer\\s*(la)?\\s*lista",
-      "template": "for (auto &item : lista) {\n    // ...\n}"
+      "template": "for (auto &item : lista) {\n"
     },
 
     "retornar": {
@@ -369,10 +375,6 @@
       "pattern": "(?:dividir|divide)\\s*(?:los\\s+n[uú]meros\\s+)?([0-9]+(?:\\s*(?:,|\\s+y\\s+|\\s+)\\s*[0-9]+)+)",
       "template": "int resultado = 0;\nvector<int> lista = {${1}};\nfor (auto n : lista) resultado /= n;\n"
     },
-    "crear_lista_enteros_con_n": {
-      "pattern": "^crear\\s+lista\\s+de\\s+n[uú]meros\\s+enteros\\s+con\\s+([0-9]+)\\s+elementos$",
-      "template": "vector<int> lista(${1});"
-    },
 
     "asignar_valor_en_lista": {
       "pattern": "^asignar\\s+valor\\s+([0-9]+)\\s+al\\s+elemento\\s+([0-9]+)\\s+(?:de la lista)?$",
@@ -382,6 +384,80 @@
     "sumar_lista_flexible": {
       "pattern": "^sumar\\s+los\\s+n[uú]meros\\s+([0-9,\\s]+)\\s+y\\s+mostrar\\s+el\\s+resultado$",
       "template": "{ string __nums = \"${1}\"; vector<int> __vals; int __val=0; bool __in=false; int __sign=1; for(char __c: __nums){ if(__c=='-'){ if(__in){ __vals.push_back(__sign*__val); __val=0; __in=false; } __sign=-1; } else if(__c>='0' && __c<='9'){ __in=true; __val = __val*10 + (__c - '0'); } else { if(__in){ __vals.push_back(__sign*__val); __val=0; __sign=1; __in=false; } } } if(__in){ __vals.push_back(__sign*__val); } int resultado = 0; for(int __n: __vals) resultado += __n; cout << \"El resultado es: \" << resultado << endl; }\n"
+    },
+    "ingresar_valor": {
+      "pattern": "^ingresar(?:\\s+(?:el\\s+valor)?)?(?:\\s+(?:en|a|a\\s+la|a\\s+el|la|el|variable))?\\s*([a-zA-Z_][a-zA-Z0-9_]*)$",
+      "template": "cout << \"Ingresa el elemento: \";\ncin >> ${1};"
+    },
+    "ingresar_en_lista": {
+      "pattern": "^ingresar(?:\\s+(?:el\\s+valor)?)?(?:\\s+(?:en|a|a\\s+la|a\\s+el|la|el))?\\s*(lista|arreglo|vector)\\s*([a-zA-Z_][a-zA-Z0-9_]*)$",
+      "template": "cout << \"Ingresa el elemento: \";\n${2}.emplace_back();\ncin >> ${2}.back();"
+    },
+    "ingresar_tipo_variable": {
+      "pattern": "^ingresar(?:\\s+(?:un|una|el\\s+valor)?)?\\s*(int|double|float|char|bool|string|enteros?|decimales?|entero|caracteres?|booleanos?|texto|palabras?|cadena)\\s+(?:en|a|a\\s+la|a\\s+el|la|el)?\\s*([a-zA-Z_][a-zA-Z0-9_]*)$",
+      "template": "cout << \"Ingresa el elemento: \";\n${1} ${2};\ncin >> ${2};"
+    },
+    "ingresar_en_lista_posicion": {
+      "pattern": "^ingresar(?:\\s+(?:un|una|el\\s+valor)?)?\\s*(int|double|float|char|bool|string|enteros?|decimales?|entero|caracteres?|booleanos?|texto|palabras?|cadena)?\\s*(?:en|a|a\\s+la|a\\s+el|la|el)?\\s*(lista|arreglo|vector)?\\s*([a-zA-Z_][a-zA-Z0-9_]*)\\s+(?:en\\s+la\\s+posicion|en\\s+la\\s+posición)\\s*([0-9]+)$",
+      "template": "cout << \"Ingresa el elemento: \";\n${1:-auto} __tmp;\ncin >> __tmp;\n${3}[${4}] = __tmp;"
+    },
+    "llenar_lista_existente": {
+      "pattern": "^(?:llenar|completar|ingresar\\s+valores(?:\\s+en)?)\\s*(?:la\\s+|el\\s+)?(?:lista|arreglo|vector)?\\s*([a-zA-Z_][a-zA-Z0-9_]*)$",
+      "template": "for (size_t i = 0; i < ${1}.size(); i++) {\n    cout << \"Ingresa el elemento \" << (i + 1) << endl;\n    cin >> ${1}[i];\n}"
+
+    },
+    "llenar_lista_con_n": {
+      "pattern": "^(?:llenar|completar)\\s*(?:la\\s+|el\\s+)?(?:lista|arreglo|vector)?\\s*([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?:con)?\\s*([0-9]+)\\s*(?:elemento(?:s)?)?$",
+      "template": "${1}.resize(${2});\\nfor (size_t i = 0; i < ${1}.size(); ++i) {\\n    cout << \\\"Ingresa el elemento \\\" << (i + 1) << \\\": \\\\n\\\";\\n    cin >> ${1}[i];\\n}"
+    },
+    "mostrar_lista": {
+      "pattern": "^(?:mostrar|imprimir)\\s*(?:la\\s+)?(?:lista|arreglo|vector)?\\s*([a-zA-Z_][a-zA-Z0-9_]*)$",
+      "template": "cout << \"Elementos de ${1}: \";\nfor (size_t i = 0; i < ${1}.size(); ++i) {\n    cout << ${1}[i] << (i + 1 < ${1}.size() ? \" \" : \"\");\n}\ncout << endl;"
+    },
+    "asignar_bool": {
+      "pattern": "^(?:si\\s+.+\\s+)?variable\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s+es\\s+(verdadero|falso|true|false)$",
+      "template": "${1} = (${2} == \"verdadero\" || ${2} == \"true\") ? true : false;"
+    },
+    "declarar_variable_bool_valor": {
+      "pattern": "^crear\\s*variable\\s*(?:booleana|bool)\\s*(?:llamada\\s+)?([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?:con\\s+valor(?:\\s+inicial)?)?\\s*(verdadero|falso|true|false)$",
+      "template": "bool ${1} = ${2};"
+    },
+    "sumar_dos_operandos": {
+      "pattern": "^(?:sumar|suma)[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*|[+-]?[0-9]+(?:\\.[0-9]+)?)[[:space:]]*(?:y|,|\\+)?[[:space:]]*([a-zA-Z_][a-zA-Z0-9_]*|[+-]?[0-9]+(?:\\.[0-9]+)?)$",
+      "template": "auto resultado = ${1} + ${2};"
+    },
+    "restar_dos_operandos": {
+      "pattern": "^(?:restar|resta)[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*|[+-]?[0-9]+(?:\\.[0-9]+)?)[[:space:]]*(?:y|,|\\-)?[[:space:]]*([a-zA-Z_][a-zA-Z0-9_]*|[+-]?[0-9]+(?:\\.[0-9]+)?)$",
+      "template": "auto resultado = ${1} - ${2};"
+    },
+    "multiplicar_dos_operandos": {
+      "pattern": "^(?:multiplicar|multiplica)[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*|[+-]?[0-9]+(?:\\.[0-9]+)?)[[:space:]]*(?:y|,|\\*)?[[:space:]]*([a-zA-Z_][a-zA-Z0-9_]*|[+-]?[0-9]+(?:\\.[0-9]+)?)$",
+      "template": "auto resultado = ${1} * ${2};"
+    },
+    "dividir_dos_operandos": {
+      "pattern": "^(?:dividir|divide)[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*|[+-]?[0-9]+(?:\\.[0-9]+)?)[[:space:]]*(?:y|,|entre|/)?[[:space:]]*([a-zA-Z_][a-zA-Z0-9_]*|[+-]?[0-9]+(?:\\.[0-9]+)?)$",
+      "template": "auto resultado = ${1} / ${2};"
+    },
+    "sumar_valor_o_var_a_variable": {
+      "pattern": "^sumar[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*|[+-]?[0-9]+(?:\\.[0-9]+)?)[[:space:]]+a(?:l|[[:space:]]+la)?[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*)$",
+      "template": "${2} = ${2} + ${1};"
+    },
+    "restar_valor_o_var_a_variable": {
+      "pattern": "^restar[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*|[+-]?[0-9]+(?:\\.[0-9]+)?)[[:space:]]+a(?:l|[[:space:]]+la)?[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*)$",
+      "template": "${2} = ${2} - ${1};"
+    },
+    "multiplicar_valor_o_var_a_variable": {
+      "pattern": "^multiplicar[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*|[+-]?[0-9]+(?:\\.[0-9]+)?)[[:space:]]+a(?:l|[[:space:]]+la)?[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*)$",
+      "template": "${2} = ${2} * ${1};"
+    },
+    "dividir_valor_o_var_a_variable": {
+      "pattern": "^dividir[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*|[+-]?[0-9]+(?:\\.[0-9]+)?)[[:space:]]+a(?:l|[[:space:]]+la)?[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*)$",
+      "template": "${2} = ${2} / ${1};"
+    },
+    "definir_funcion_tipo_con_parametros": {
+      "pattern": "^definir\\s*funci[oó]n\\s*(?:de\\s+tipo\\s+)?(void|int|double|float|char|bool|string|enteros?|decimales?|entero|caracteres?|booleanos?|texto|palabras?|cadena)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s+con\\s+par[aá]metros?\\s+(.+)$",
+      "template": "${1} ${2}(${3})"
     }
+
   }
 }
