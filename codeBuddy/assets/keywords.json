@@ -200,13 +200,12 @@
     },
 
     "repetir_hasta_generico": {
-      "pattern": "^repetir[[:space:]]+hasta[[:space:]]+que[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*)[[:space:]]+(>|<|>=|<=|==|!=)[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*|[0-9]+(?:\\.[0-9]+)?)$",
+      "pattern": "^\\s*[Rr]epetir\\s+(?:[Hh]asta|[Mm]ientras)\\s*$",
       "template": "do {"
     },
-
-    "terminar_repetir_hasta": {
-      "pattern": "^terminar[[:space:]]+repetir[[:space:]]+hasta[[:space:]]+que[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*)[[:space:]]+(>|<|>=|<=|==|!=)[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*|[0-9]+(?:\\.[0-9]+)?)$",
-      "template": "} while (${1} ${2} ${3});"
+    "terminar_repetir": {
+      "pattern": "^\\s*terminar\\s+repetir\\s+(?:hasta|mientras)(?:\\s+que)?\\s+([a-zA-Z_][a-zA-Z0-9_]*|-?\\d+(?:\\.\\d+)?|\"[^\"]+\"|'[^']')\\s+(>=|<=|==|!=|>|<)\\s+([a-zA-Z_][a-zA-Z0-9_]*|-?\\d+(?:\\.\\d+)?|\"[^\"]+\"|'[^']')\\s*;?\\s*$",
+      "template": "} while(${1} ${2} ${3});"
     },
 
     "si_generico": {
@@ -348,9 +347,10 @@
       "template": "return 0;}"
     },
     "definir_funcion": {
-      "pattern": "definir\\s*funci[oó]n\\s*([a-zA-Z_][a-zA-Z0-9_]*)\\s*\\((.*)\\)",
-      "template": "void ${1}(${2})"
+      "pattern": "^[[:space:]]*[Dd]efinir[[:space:]]+funci[oó]n[[:space:]]+([A-Za-z_][A-Za-z0-9_:<>\\*&[:space:]]*)[[:space:]]+[Ll]lamada[[:space:]]+([A-Za-z_][A-Za-z0-9_]*)[[:space:]]*;?[[:space:]]*$",
+      "template": "${1} ${2}()"
     },
+
     "iniciar_funcion": {
       "pattern": "iniciar\\s*funci[oó]n",
       "template": "{"
@@ -373,7 +373,7 @@
     },
     "multiplicar_n_veces": {
       "pattern": "(?:multiplicar|multiplica)\\s*(?:los\\s+n[uú]meros\\s+)?([0-9]+(?:\\s*(?:,|\\s+y\\s+|\\s+)\\s*[0-9]+)+)",
-      "template": "int resultado = 0;\nvector<int> lista = {${1}};\nfor (auto n : lista) resultado *= n;\n"
+      "template": "int resultado = 1r;\nvector<int> lista = {${1}};\nfor (auto n : lista) resultado *= n;\n"
     },
     "dividir_n_veces": {
       "pattern": "(?:dividir|divide)\\s*(?:los\\s+n[uú]meros\\s+)?([0-9]+(?:\\s*(?:,|\\s+y\\s+|\\s+)\\s*[0-9]+)+)",
@@ -416,13 +416,18 @@
     },
 
     "mostrar_lista": {
-      "pattern": "^(?:mostrar|imprimir)\\s*(?:la\\s+)?(?:lista|arreglo|vector)?\\s*([a-zA-Z_][a-zA-Z0-9_]*)$",
+      "pattern": "^(?:mostrar|imprimir)\\s*(?:la\\s+)?(?:lista|arreglo|vector)\\s*([a-zA-Z_][a-zA-Z0-9_]*)$",
       "template": "cout << \"Elementos de ${1}: \";\nfor (size_t i = 0; i < ${1}.size(); ++i) {\n    cout << ${1}[i] << (i + 1 < ${1}.size() ? \" \" : \"\");\n}\ncout << endl;"
     },
-    "asignar_bool": {
-      "pattern": "^(?:si\\s+.+\\s+)?variable\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s+es\\s+(verdadero|falso|true|false)$",
-      "template": "${1} = (${2} == \"verdadero\" || ${2} == \"true\") ? true : false;"
+    "asignar_bool_true": {
+      "pattern": "^(?:si\\s+.+\\s+)?variable\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s+es\\s+(?:verdadero|true)\\s*;?\\s*$",
+      "template": "${1} = true;"
     },
+    "asignar_bool_false": {
+      "pattern": "^(?:si\\s+.+\\s+)?variable\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s+es\\s+(?:falso|false)\\s*;?\\s*$",
+      "template": "${1} = false;"
+    },
+
     "declarar_variable_bool_valor": {
       "pattern": "^crear\\s*variable\\s*(?:booleana|bool)\\s*(?:llamada\\s+)?([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?:con\\s+valor(?:\\s+inicial)?)?\\s*(verdadero|falso|true|false)$",
       "template": "bool ${1} = ${2};"
@@ -462,7 +467,14 @@
     "definir_funcion_tipo_con_parametros": {
       "pattern": "^definir\\s*funci[oó]n\\s*(?:de\\s+tipo\\s+)?(void|int|double|float|char|bool|string|enteros?|decimales?|entero|caracteres?|booleanos?|texto|palabras?|cadena)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s+con\\s+par[aá]metros?\\s+(.+)$",
       "template": "${1} ${2}(${3})"
+    },
+    "crear_variable_string": {
+      "pattern": "^\\s*crear\\s+variable\\s+(?:de\\s+texto|string)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s+(?:con\\s+valor\\s+inicial\\s+)?(\\\"[^\\\"]*\\\")\\s*;?\\s*$",
+      "template": "string ${1} = ${2};"
+    },
+    "crear_variable_char": {
+      "pattern": "^\\s*[Cc]rear\\s+[Vv]ariable\\s+(?:[Cc]har|[Cc]ar[aá]cter|[Ll]etra)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s+(?:[Cc]on\\s+[Vv]alor\\s+[Ii]nicial\\s+)?('(?:\\\\'|[^'])')\\s*;?\\s*$",
+      "template": "char ${1} = ${2};"
     }
-
   }
 }
