@@ -265,10 +265,7 @@
       "pattern": "^crear\\s*variable\\s*(?:n[uú]mero\\s+entero|entero|int)\\s*(?:llamada|con\\s+nombre)?\\s*([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?:(?:con\\s+valor(?:\\s+inicial)?|igual(?:\\s+a)?|=)\\s*([+-]?[0-9]+))$",
       "template": "int ${1} = ${2};"
     },
-    "repetir_veces_mensaje": {
-      "pattern": "repetir ([0-9]+) veces mostrar el mensaje \"([^\"]+)\"",
-      "template": "for(int i=0; i<${1}; i++) { cout << \"${2}\" << endl; "
-    },
+
     "repetir_n_veces": {
       "pattern": "repetir ([0-9]+) veces",
       "template": "for(int i = 0; i < ${1}; i++) {"
@@ -309,9 +306,15 @@
       "pattern": "agregar\\s*(el)?\\s*valor\\s*([0-9]+|\"[^\"]+\")\\s*a\\s*(lista|arreglo|vector)",
       "template": "lista.push_back(${2});"
     },
+
+    "agregar_a_lista_nom": {
+      "pattern": "agregar\\s*(el)?\\s*valor\\s*([0-9]+|\"[^\"]+\")\\s*a\\s*([a-zA-Z_][a-zA-Z0-9_]*)",
+      "template": "${3}.push_back(${2});"
+    },
+
     "recorrer_lista": {
-      "pattern": "recorrer\\s*(la)?\\s*lista",
-      "template": "for (auto &item : lista) {\n"
+      "pattern": "recorrer\\s*(?:(?:la|el)\\s*)?(lista|vector|arreglo)\\s*([a-zA-Z_][a-zA-Z0-9_]*)",
+      "template": "for (auto &item : ${2}) {\n"
     },
 
     "retornar": {
@@ -324,9 +327,10 @@
       "template": "cout << \"${1}\" << endl;"
     },
     "mostrar_variable": {
-      "pattern": "^(?:mostrar|imprimir)\\s+([a-zA-Z_][a-zA-Z0-9_]*)$",
+      "pattern": "^\\s*(?:[Mm]ostrar|[Ii]mprimir)\\s*(?:la\\s*(?:variable|var)\\s*)?([a-zA-Z_][a-zA-Z0-9_]*)\\s*;?\\s*$",
       "template": "cout << ${1} << endl;"
     },
+
     "leer": {
       "pattern": "^(?:leer|ingresar\\s+valor|cin)\\s*(?:en|a|la|el)?\\s*([a-zA-Z_][a-zA-Z0-9_]*)$",
       "template": "cin >> ${1};"
@@ -377,8 +381,8 @@
     },
 
     "asignar_valor_en_lista": {
-      "pattern": "^asignar\\s+valor\\s+([0-9]+)\\s+al\\s+elemento\\s+([0-9]+)\\s+(?:de la lista)?$",
-      "template": "lista[${2}] = ${1};"
+      "pattern": "^asignar\\s+valor\\s+([0-9]+(?:\\.[0-9]+)?|\"[^\"]+\"|'[^']')\\s+al\\s+elemento\\s+([0-9]+)\\s+(?:de\\s+(?:la\\s+)?(?:lista|vector|arreglo)\\s+)?([a-zA-Z_][a-zA-Z0-9_]*)$",
+      "template": "${3}[${2}] = ${1};"
     },
 
     "sumar_lista_flexible": {
@@ -408,8 +412,9 @@
     },
     "llenar_lista_con_n": {
       "pattern": "^(?:llenar|completar)\\s*(?:la\\s+|el\\s+)?(?:lista|arreglo|vector)?\\s*([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?:con)?\\s*([0-9]+)\\s*(?:elemento(?:s)?)?$",
-      "template": "${1}.resize(${2});\\nfor (size_t i = 0; i < ${1}.size(); ++i) {\\n    cout << \\\"Ingresa el elemento \\\" << (i + 1) << \\\": \\\\n\\\";\\n    cin >> ${1}[i];\\n}"
+      "template": "${1}.resize(${2});\nfor (size_t i = 0; i < ${1}.size(); ++i) {\n    cout << \"Ingresa el elemento \" << (i + 1) << \": \" << endl;\n    cin >> ${1}[i];\n}"
     },
+
     "mostrar_lista": {
       "pattern": "^(?:mostrar|imprimir)\\s*(?:la\\s+)?(?:lista|arreglo|vector)?\\s*([a-zA-Z_][a-zA-Z0-9_]*)$",
       "template": "cout << \"Elementos de ${1}: \";\nfor (size_t i = 0; i < ${1}.size(); ++i) {\n    cout << ${1}[i] << (i + 1 < ${1}.size() ? \" \" : \"\");\n}\ncout << endl;"
