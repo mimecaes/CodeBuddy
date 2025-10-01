@@ -50,7 +50,6 @@ static vector<Rule> loadRules(const nlohmann::json& keywords) {
         const string tmpl = el.value()["template"].get<string>();
         const string pattern = normalizePatternEscapes(patternRaw);
         try {
-            // Agrega icase para insensibilidad a mayusculas
             regex rx(pattern, regex_constants::ECMAScript | regex_constants::optimize | regex_constants::icase);
             rules.push_back(Rule{ rx, tmpl, ruleName });
         }
@@ -171,7 +170,7 @@ QString CodeGenerator::generateCppCode(const QStringList& instructions, const nl
 
     for (const QString& qline : instructions) {
         string original = toUtf8WithoutAccents(qline);
-        string line = applyPreprocess(preprocess, original); // Solo preprocesa, no normaliza
+        string line = applyPreprocess(preprocess, original);
 
         if (line.empty()) {
             code += "\n";
@@ -238,7 +237,7 @@ QString CodeGenerator::generateCppCode(const QStringList& instructions, const nl
             code += "// " + QString::fromStdString(original) + "\n";
         }
     }
-    code += "return 0;";
+    code += "return 0; }";
 
     return code;
 }
