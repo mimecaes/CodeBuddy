@@ -70,6 +70,17 @@
 
   "preprocess": [
     {
+      "name": "bool_valor_true",
+      "pattern": "\\b([Vv]erdadero|[Tt]rue)\\b",
+      "replace": "true"
+    },
+    {
+      "name": "bool_valor_false",
+      "pattern": "\\b([Ff]also|[Ff]alse)\\b",
+      "replace": "false"
+    },
+
+    {
       "name": "y-e-a-coma",
       "pattern": "([0-9])[[:space:]]*(?:y|e)[[:space:]]*([0-9])",
       "replace": "$1, $2"
@@ -91,7 +102,7 @@
       "replace": ">"
     },
     {
-      "name": "comparador_menor_preprocess", 
+      "name": "comparador_menor_preprocess",
       "pattern": "menor[[:space:]]+que",
       "replace": "<"
     },
@@ -171,9 +182,14 @@
       "template": "vector<${2}> ${3}(${1});"
     },
 
-    "repetir_mensaje": {
+    "repe_mensaje": {
       "pattern": "^repetir[[:space:]]+([0-9]+)[[:space:]]+veces[[:space:]]+(?:mostrar|imprimir)[[:space:]]+el[[:space:]]+mensaje[[:space:]]*\"([^\"]+)\"$",
-      "template": "for(int i=0; i<${1}; ++i) { cout << \"${2}\" << endl; }"
+      "template": "for(int i=0; i<${1}; i++) { cout << \"${2}\" << endl; }"
+    },
+
+    "repetir_n_veces": {
+      "pattern": "^repetir[[:space:]]+([0-9]+)[[:space:]]+veces$",
+      "template": "for(int i = 0; i < ${1}; i++) {"
     },
 
     "restar_valor_a_variable": {
@@ -475,6 +491,24 @@
     "crear_variable_char": {
       "pattern": "^\\s*[Cc]rear\\s+[Vv]ariable\\s+(?:[Cc]har|[Cc]ar[aá]cter|[Ll]etra)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s+(?:[Cc]on\\s+[Vv]alor\\s+[Ii]nicial\\s+)?('(?:\\\\'|[^'])')\\s*;?\\s*$",
       "template": "char ${1} = ${2};"
+    },
+    "anadir_variable_a_lista": {
+      "pattern": "^(?:a[ñn]adir|agregar)\\s+variable\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s+(?:a|al|a\\s+la|a\\s+el)\\s*(?:lista|arreglo|vector)\\s*([a-zA-Z_][a-zA-Z0-9_]*)$",
+      "template": "${2}.push_back(${1});"
+    },
+
+    "anadir_a_lista_corto": {
+      "pattern": "^(?:a[ñn]adir|agregar)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s+(?:a|al|a\\s+la|a\\s+el)\\s*(?:lista|arreglo|vector)\\s*([a-zA-Z_][a-zA-Z0-9_]*)$",
+      "template": "${2}.push_back(${1});"
+    },
+    "iniciar_programa": {
+      "pattern": "^(?:iniciar|empezar)\\s+programa$",
+      "template": "int main(){"
+    },
+    "finalizar_programa": {
+      "pattern": "^(?:finalizar|terminar)\\s+programa$",
+      "template": "return 0;}"
     }
+
   }
 }
