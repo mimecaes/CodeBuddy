@@ -512,7 +512,14 @@
     "igual_generico": {
       "pattern": "^[[:space:]]*((?:[a-zA-Z_][a-zA-Z0-9_]*[[:space:]]*\\([^()]*\\)|[a-zA-Z_][a-zA-Z0-9_]*|\"(?:[^\"\\\\]|\\\\.)*\"|'(?:[^'\\\\]|\\\\.)*'|[+-]?[0-9]+(?:\\.[0-9]+)?))[[:space:]]*(?:=|igual(?:[[:space:]]+a)?)[[:space:]]*((?:[a-zA-Z_][a-zA-Z0-9_]*[[:space:]]*\\([^()]*\\)|[a-zA-Z_][a-zA-Z0-9_]*|\"(?:[^\"\\\\]|\\\\.)*\"|'(?:[^'\\\\]|\\\\.)*'|[+-]?[0-9]+(?:\\.[0-9]+)?))[[:space:]]*$",
       "template": "${1} = ${2};"
+    },
+    "anadir_variable_en_posicion": {
+      "pattern": "^\\s*(?:a(?:ñ|n)adir|agregar)[[:space:]]+(?:la[[:space:]]+)?(?:variable[[:space:]]+)?([a-zA-Z_][a-zA-Z0-9_]*)[[:space:]]+en[[:space:]]+(?:la[[:space:]]+)?(?:posici(?:o|ó)n|[ií]ndice|index|espacio)[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*|[+-]?[0-9]+)[[:space:]]+a(?:l|\\s+la|\\s+el)?[[:space:]]+(?:arreglo|lista|vector)[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*)\\s*$",
+      "template": "size_t __pos = static_cast<size_t>(${2});\nif (__pos <= ${3}.size()) {\n    ${3}.insert(${3}.begin() + __pos, ${1});\n} else {\n    /* Índice fuera de rango: decide si redimensionar o notificar error */\n    // cout << \"Índice fuera de rango\" << endl;\n}"
+    },
+    "anadir_variable_a_vector": {
+      "pattern": "^\\s*(?:a(?:ñ|n)adir|agregar)[[:space:]]+(?:la[[:space:]]+)?(?:variable[[:space:]]+)?([a-zA-Z_][a-zA-Z0-9_]*)[[:space:]]+a(?:l|[[:space:]]+la|[[:space:]]+el)?[[:space:]]+(?:arreglo|lista|vector)[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*)\\s*$",
+      "template": "${2}.push_back(${1});"
     }
-
   }
 }
