@@ -10,6 +10,7 @@
 #define UI_MAINWINDOW_H
 
 #include <QtCore/QVariant>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
@@ -40,6 +41,9 @@ public:
         if (mainWindowClass->objectName().isEmpty())
             mainWindowClass->setObjectName("mainWindowClass");
         mainWindowClass->resize(1280, 862);
+        QIcon icon;
+        icon.addFile(QString::fromUtf8("../../../../../Pictures/Screenshots/Captura de pantalla 2025-08-14 140248.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
+        mainWindowClass->setWindowIcon(icon);
         centralWidget = new QWidget(mainWindowClass);
         centralWidget->setObjectName("centralWidget");
         centralWidget->setStyleSheet(QString::fromUtf8("background-color: #f9f9f0;"));
@@ -171,7 +175,7 @@ public:
 
     void retranslateUi(QMainWindow *mainWindowClass)
     {
-        mainWindowClass->setWindowTitle(QCoreApplication::translate("mainWindowClass", "mainWindowController", nullptr));
+        mainWindowClass->setWindowTitle(QCoreApplication::translate("mainWindowClass", "CodeBuddy", nullptr));
         labelTittle->setText(QString());
         LabelBuddy->setText(QString());
         btnInicio->setText(QCoreApplication::translate("mainWindowClass", "\313\232\342\202\212\342\200\247\352\222\260\341\203\220 Iniciar \340\273\222\352\222\261 \342\200\247\342\202\212\313\232", nullptr));

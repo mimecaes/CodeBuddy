@@ -10,6 +10,7 @@
 #define UI_SECONDWINDOW_H
 
 #include <QtCore/QVariant>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
@@ -47,6 +48,9 @@ public:
         secondWindowClass->setMouseTracking(false);
         secondWindowClass->setTabletTracking(false);
         secondWindowClass->setAcceptDrops(false);
+        QIcon icon;
+        icon.addFile(QString::fromUtf8("../../../../../Pictures/Screenshots/Captura de pantalla 2025-08-14 140248.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
+        secondWindowClass->setWindowIcon(icon);
         secondWindowClass->setAutoFillBackground(false);
         secondWindowClass->setStyleSheet(QString::fromUtf8("background-color: #f9f9f0;\n"
 ""));
@@ -164,7 +168,7 @@ public:
 
     void retranslateUi(QWidget *secondWindowClass)
     {
-        secondWindowClass->setWindowTitle(QCoreApplication::translate("secondWindowClass", "PantallaPrincipal", nullptr));
+        secondWindowClass->setWindowTitle(QCoreApplication::translate("secondWindowClass", "CodeBuddy", nullptr));
         labelTxt->setText(QCoreApplication::translate("secondWindowClass", "Archivo txt", nullptr));
         labelCode->setText(QCoreApplication::translate("secondWindowClass", "Codigo generado", nullptr));
         btnTxtArchive->setText(QCoreApplication::translate("secondWindowClass", "\313\232\342\202\212\342\200\247\352\222\260\341\203\220 Cargar archivo \340\273\222\352\222\261 \342\200\247\342\202\212\313\232", nullptr));

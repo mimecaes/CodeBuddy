@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>mainWindowController</string>
+   <string>CodeBuddy</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../../../../../Pictures/Screenshots/Captura de pantalla 2025-08-14 140248.png</normaloff>../../../../../Pictures/Screenshots/Captura de pantalla 2025-08-14 140248.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <property name="styleSheet">
