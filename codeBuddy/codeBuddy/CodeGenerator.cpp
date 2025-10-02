@@ -163,7 +163,7 @@ static string renderIf(const string& in, const smatch& m) {
 
 QString CodeGenerator::generateCppCode(const QStringList& instructions, const nlohmann::json& keywords) {
     QString code;
-    code += "#include <iostream>\n#include <vector>\n#include <string>\n#include <fstream>\nusing namespace std;\nint main(){";
+    code += "#include <iostream>\n#include <vector>\n#include <string>\n#include <fstream>\nusing namespace std;\n";
 
     vector<Rule> rules = loadRules(keywords);
     vector<PreStep> preprocess = loadPreprocess(keywords);
@@ -229,15 +229,12 @@ QString CodeGenerator::generateCppCode(const QStringList& instructions, const nl
             temp = renderIf(temp, bestMatch);
 
             temp = regex_replace(temp, regex(R"(\$\{\d+\})"), "");
-            code += "// [rule:" + bestRuleName + "]\n";
+            code += "// [Regla:" + bestRuleName + "]\n";
             code += QString::fromStdString(temp);
             code += "\n";
         }
-        else {
-            code += "// " + QString::fromStdString(original) + "\n";
-        }
+        else code += "// Ocurrio un error! revisa la manera en que lo escribiste e intentalo de nuevo :] \n";
     }
-    code += "return 0; }";
 
     return code;
 }
